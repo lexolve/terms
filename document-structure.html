@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Avtalevilkår for Låvlis tjenester</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{
+  --bg:#FAF9F7;--ink:#1A1A1A;--muted:#6F6F6F;--line:#9A958C;--card-shadow:rgba(26,26,26,.06);
+  --head:#015040;--accent:#B8401F;
+  --gray-f:#FFFFFF;--gray-b:#CFC9BF;--gray-t:#212121;
+  --coral-f:#FDF5F2;--coral-b:#E45735;--coral-t:#7A2A14;
+  --teal-f:#EFF5F3;--teal-b:#48846F;--teal-t:#015040;
+  --purple-f:#FFF6E8;--purple-b:#D9983F;--purple-t:#6A4710;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1513;--ink:#ECEFED;--muted:#A5ADA9;--line:#6C7672;--card-shadow:rgba(0,0,0,0);
+    --head:#BFE6D8;--accent:#F08A66;
+    --gray-f:#18201D;--gray-b:#57605C;--gray-t:#E4E8E6;
+    --coral-f:#35190F;--coral-b:#D7603F;--coral-t:#F8D2C5;
+    --teal-f:#0C2B24;--teal-b:#48846F;--teal-t:#C4E9DC;
+    --purple-f:#33260F;--purple-b:#C28A3A;--purple-t:#F6DDB4;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1513;--ink:#ECEFED;--muted:#A5ADA9;--line:#6C7672;--card-shadow:rgba(0,0,0,0);
+  --head:#BFE6D8;--accent:#F08A66;
+  --gray-f:#18201D;--gray-b:#57605C;--gray-t:#E4E8E6;
+  --coral-f:#35190F;--coral-b:#D7603F;--coral-t:#F8D2C5;
+  --teal-f:#0C2B24;--teal-b:#48846F;--teal-t:#C4E9DC;
+  --purple-f:#33260F;--purple-b:#C28A3A;--purple-t:#F6DDB4;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.45}
+header{max-width:1720px;margin:0 auto;padding:28px 32px 8px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var(--head)}
+.brand{display:block;margin:0 0 14px;line-height:0}
+.brand img{height:36px;width:auto}
+.lead{margin:0;color:var(--muted);max-width:70ch}
+.lead a{color:var(--head)}
+.lead a:hover{color:var(--accent)}
+.lead+.lead{margin-top:8px}
+.filters{display:flex;flex-direction:column;gap:12px}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;color:var(--muted)}
+.legend b{font-weight:600;color:var(--ink);min-width:62px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend [data-f]{cursor:pointer;padding:3px 8px;margin:-3px -4px;border-radius:999px;transition:background .15s,color .15s,box-shadow .15s}
+.legend .svc{margin:0;padding:4px 12px;border:1px solid var(--gray-b);background:var(--gray-f);color:var(--ink);font-weight:500}
+.legend [data-f]:hover,.legend [data-f]:focus-visible,.legend [data-f].on{background:var(--gray-f);color:var(--ink);outline:none;box-shadow:0 0 0 1px var(--gray-b)}
+.legend .svc:hover,.legend .svc:focus-visible,.legend .svc.on{border-color:var(--head);box-shadow:0 0 0 1px var(--head)}
+.box,#lines{transition:opacity .15s,box-shadow .15s}
+#wrap[data-hl] .box:not(.hit){opacity:.18}
+#wrap[data-hl] #lines{opacity:.25}
+#wrap[data-hl] .box.hit{box-shadow:0 0 0 2px var(--hl)}
+.box.gray{--hl:var(--gray-b)}.box.coral{--hl:var(--coral-b)}.box.teal{--hl:var(--teal-b)}.box.purple{--hl:var(--purple-b)}
+.sw{width:14px;height:14px;border-radius:4px;border:1.5px solid}
+#wrap{position:relative;max-width:1720px;margin:0 auto;padding:16px 40px 40px 32px}
+#lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;color:var(--line);overflow:visible}
+.grid{position:relative;z-index:1;display:grid;grid-template-columns:56px repeat(5,minmax(0,1fr));column-gap:22px;row-gap:44px;align-items:start}
+.lvl{font-size:12px;color:var(--muted);padding-top:10px;white-space:nowrap}
+.box{border:1.5px solid;border-radius:14px;padding:12px 14px 12px;min-width:0;box-shadow:0 1px 2px var(--card-shadow)}
+.box h2{font-size:15px;font-weight:600;margin:0;line-height:1.3}
+.file{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11.5px;opacity:.75;margin:2px 0 6px;overflow-wrap:anywhere}
+.role{font-size:12.5px;margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid;border-color:inherit;opacity:.9}
+.box ol{margin:0;padding-left:22px;font-size:13px}
+.box li{margin:2px 0}
+.box ul{margin:4px 0 0;padding-left:18px;font-size:13px}
+.sub{font-size:12px;font-weight:500;margin:8px 0 0;opacity:.85}
+.tbl{font-size:11px;font-weight:500;margin-left:6px;padding:1px 6px;border:1px solid;border-radius:4px;opacity:.75;white-space:nowrap}
+.none{opacity:.45}
+.none::after{content:" – ingen tillegg";font-size:11.5px}
+.gray{background:var(--gray-f);border-color:var(--gray-b);color:var(--gray-t)}
+.coral{background:var(--coral-f);border-color:var(--coral-b);color:var(--coral-t)}
+.teal{background:var(--teal-f);border-color:var(--teal-b);color:var(--teal-t)}
+.purple{background:var(--purple-f);border-color:var(--purple-b);color:var(--purple-t)}
+.template{border-style:dashed}
+.cols2{columns:2;column-gap:28px}
+.c1{grid-column:2}.c2{grid-column:3}.c3{grid-column:4}.c4{grid-column:5}.c5{grid-column:6}
+.c34{grid-column:4/6}.c35{grid-column:4/7}.c14{grid-column:2/6}.call{grid-column:2/7}
+.note{background:transparent;border-style:dashed}
+.note p{margin:4px 0 0;font-size:13px}
+.rk{grid-row:1}.r0{grid-row:2}.r1{grid-row:3}.r2{grid-row:4}.r3{grid-row:5}
+@media (max-width:1100px){
+  #wrap{padding:12px 16px 32px}
+  .grid{grid-template-columns:minmax(0,1fr);row-gap:14px}
+  .grid>*{grid-column:1!important;grid-row:auto!important}
+  .lvl{padding-top:14px}
+  #lines{display:none}
+  .cols2{columns:1}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <a class="brand" href="https://lavli.no"><picture><source srcset="assets/logo-white.png" media="(prefers-color-scheme:dark)"><img src="assets/logo.png" alt="Låvli" width="92" height="36"></picture></a>
+    <h1>Avtalevilkår for Låvlis tjenester</h1>
+    <p class="lead">Her finner du vilkårene, databehandleravtalen, sikkerhetsbeskrivelsen og personverninformasjon for Låvli Privat, Låvli Bedrift, Lexolve OS og Låvli Plattform. Dokumentene bygger på hverandre i nivåer. De overordnede vilkårene gjelder alle tjenestene, og hver tjeneste har i tillegg egne dokumenter på nivåene under. Velg en tjeneste for å se hvilke dokumenter som gjelder for den.</p>
+    <p class="lead">Heltrukne linjer viser hvor hvert dokument er hjemlet eller forankret. Stiplede linjer viser hvordan avtalen inngås: med signert kundeavtale for Låvli Plattform, og ved aksept i tjenesten for de andre. Klikk på et dokument for å lese det. Endringene står i <a href="https://github.com/lexolve/terms/commits/main">historikken på GitHub</a>.</p>
+  </div>
+  <div class="filters">
+    <div class="legend" role="group" aria-label="Tjenester">
+      <b>Tjeneste</b>
+      <span class="svc" data-f='[data-s~="privat"]' tabindex="0">Låvli Privat</span>
+      <span class="svc" data-f='[data-s~="bedrift"]' tabindex="0">Låvli Bedrift</span>
+      <span class="svc" data-f='[data-s~="lexolve-os"]' tabindex="0">Lexolve OS</span>
+      <span class="svc" data-f='[data-s~="plattform"]' tabindex="0">Låvli Plattform</span>
+    </div>
+    <div class="legend" role="group" aria-label="Farger">
+      <b>Farge</b>
+      <span data-f=".gray" tabindex="0"><i class="sw gray"></i>Felles for alle tjenester</span>
+      <span data-f=".coral" tabindex="0"><i class="sw coral"></i>Privatpersoner</span>
+      <span data-f=".teal" tabindex="0"><i class="sw teal"></i>Virksomheter</span>
+      <span data-f=".purple" tabindex="0"><i class="sw purple"></i>Personvern</span>
+    </div>
+  </div>
+</header>
+
+<div id="wrap">
+<svg id="lines" aria-hidden="true">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+  <g id="paths" fill="none" stroke="currentColor" stroke-width="1.4"></g>
+</svg>
+
+<div class="grid">
+
+  <div class="lvl rk" style="grid-column:1">Nivå 0</div>
+  <section class="box gray note c14 rk" id="aksept" data-s="privat bedrift lexolve-os">
+    <h2>Aksept i tjenesten</h2>
+    <p class="role">Låvli Privat, Låvli Bedrift og Lexolve OS</p>
+    <p>Ingen signert kundeavtale. Brukeren aksepterer i tjenesten, og dokumentene lenkes fra web.</p>
+  </section>
+  <section class="box teal template c5 rk" id="kundeavtale" data-s="plattform">
+    <h2>Kundeavtale</h2>
+    <div class="file">0-kundeavtale.md</div>
+    <p class="role">Låvli Plattform. Signeres per virksomhet og omfatter dokumentpakken</p>
+    <ol>
+      <li>Parter og kontaktpersoner</li>
+      <li>Leveranse</li>
+      <li>Bestilling</li>
+      <li>Avtaleperiode</li>
+      <li>Avtaledokumenter</li>
+      <li>Avvik fra standardvilkårene</li>
+      <li>Signaturer</li>
+    </ol>
+  </section>
+
+  <div class="lvl r0" style="grid-column:1">Nivå 1</div>
+  <section class="box gray call r0" id="n0" data-s="privat bedrift lexolve-os plattform">
+    <h2>Overordnede vilkår for Låvlis tjenester</h2>
+    <div class="file">1-overordnede-vilkar.md</div>
+    <p class="role">Gjelder alle tjenester og kunder</p>
+    <ol class="cols2">
+      <li>Låvli og tjenestene</li>
+      <li>Slik henger dokumentene sammen</li>
+      <li>Begreper</li>
+      <li>Tjenestenes art og KI-forbehold</li>
+      <li>Bruk av tjenestene</li>
+      <li>Sperring</li>
+      <li>Tilgjengelighet og bruksgrenser</li>
+      <li>Endringer i tjenestene og vilkårene</li>
+      <li>Immaterielle rettigheter</li>
+      <li>Personopplysninger</li>
+      <li>Sikkerhet</li>
+      <li>Lovvalg</li>
+    </ol>
+  </section>
+
+  <div class="lvl r1" style="grid-column:1">Nivå 2</div>
+  <section class="box coral c1 r1" id="privat" data-s="privat">
+    <h2>Vilkår for Låvli Privat</h2>
+    <div class="file">2-vilkar-privat.md</div>
+    <p class="role">Hjemlet i de overordnede vilkårene</p>
+    <ol>
+      <li>Hvem tjenesten er for</li>
+      <li>Avtalen og aksept</li>
+      <li>Gratis tilgang og forskning</li>
+      <li>Formidling av advokat</li>
+      <li>Tjenestemeldinger og markedsføring</li>
+      <li>Personopplysninger</li>
+      <li>Ansvar</li>
+      <li>Endringer</li>
+      <li>Oppsigelse, angrerett og sletting</li>
+      <li>Tvister</li>
+    </ol>
+  </section>
+  <section class="box gray c2 r1" id="sikkerhet" data-s="privat bedrift lexolve-os plattform">
+    <h2>Sikkerhet</h2>
+    <div class="file">2-sikkerhet.md</div>
+    <p class="role">Hjemlet i de overordnede vilkårene. Står alene</p>
+    <ol>
+      <li>Tilgang og innlogging</li>
+      <li>Kryptering</li>
+      <li>Isolasjon mellom kunder og brukere</li>
+      <li>KI-modeller og eksterne kilder</li>
+      <li>Logging og overvåking</li>
+      <li>Utvikling og drift</li>
+      <li>Sikkerhetskopier og gjenoppretting</li>
+      <li>Sikkerhetsbrudd</li>
+    </ol>
+  </section>
+  <section class="box teal c34 r1" id="generelle" data-s="bedrift lexolve-os plattform">
+    <h2>Generelle vilkår for virksomheter</h2>
+    <div class="file">2-generelle-vilkar-virksomheter.md</div>
+    <p class="role">Hjemlet i de overordnede vilkårene</p>
+    <ol class="cols2">
+      <li>Hvem tjenestene er for</li>
+      <li>Avtalen og aksept</li>
+      <li>Pris og betaling</li>
+      <li>Brukere og kontoer</li>
+      <li>Virksomhetens ansvar for innhold</li>
+      <li>Personopplysninger</li>
+      <li>Taushetsplikt</li>
+      <li>Underleverandører og KI-modeller</li>
+      <li>Ansvar</li>
+      <li>Force majeure</li>
+      <li>Endringer</li>
+      <li>Oppsigelse og sletting</li>
+      <li>Øvrige bestemmelser</li>
+      <li>Tvister</li>
+    </ol>
+  </section>
+  <section class="box teal c5 r1" id="dpa" data-s="bedrift lexolve-os plattform">
+    <h2>Databehandleravtale</h2>
+    <div class="file">2-databehandleravtale.md</div>
+    <p class="role">Hjemlet i de generelle vilkårene for virksomheter</p>
+    <ol>
+      <li>Partene og rollene</li>
+      <li>Behandlingen avtalen gjelder</li>
+      <li>Låvlis egen behandling</li>
+      <li>Instruks</li>
+      <li>Taushetsplikt</li>
+      <li>Sikkerhet</li>
+      <li>Underleverandører</li>
+      <li>Overføring utenfor EU/EØS</li>
+      <li>Bistand og de registrertes rettigheter</li>
+      <li>Brudd på personopplysningssikkerheten</li>
+      <li>Revisjon</li>
+      <li>Endringer</li>
+      <li>Varighet, sletting og eksport</li>
+    </ol>
+  </section>
+
+  <div class="lvl r2" style="grid-column:1">Nivå 3</div>
+  <section class="box teal c3 r2" id="bedrift" data-s="bedrift">
+    <h2>Spesielle vilkår for Låvli Bedrift</h2>
+    <div class="file">3-spesielle-vilkar-bedrift.md</div>
+    <p class="role">Tillegg til de generelle vilkårene</p>
+    <ol>
+      <li>Tjenesten</li>
+      <li>Avtale, pris og betaling</li>
+      <li>Personopplysninger</li>
+      <li>Ansvar</li>
+      <li>Oppsigelse og sletting</li>
+    </ol>
+  </section>
+  <section class="box teal c4 r2" id="os" data-s="lexolve-os">
+    <h2>Spesielle vilkår for Lexolve OS</h2>
+    <div class="file">3-spesielle-vilkar-lexolve-os.md</div>
+    <p class="role">Tillegg til de generelle vilkårene</p>
+    <ol>
+      <li>Tjenesten</li>
+      <li>Avtale, pris og betaling</li>
+      <li class="none">Personopplysninger</li>
+      <li>Ansvar</li>
+      <li>Oppsigelse og sletting</li>
+    </ol>
+  </section>
+  <section class="box teal c5 r2" id="plattform" data-s="plattform">
+    <h2>Spesielle vilkår for Låvli Plattform</h2>
+    <div class="file">3-spesielle-vilkar-plattform.md</div>
+    <p class="role">Tillegg til de generelle vilkårene</p>
+    <ol>
+      <li>Tjenesten</li>
+      <li>Avtale, pris og betaling</li>
+      <li>Personopplysninger</li>
+      <li>Ansvar</li>
+      <li>Oppsigelse og sletting</li>
+    </ol>
+  </section>
+
+  <div class="lvl r3" style="grid-column:1">Nivå 4</div>
+  <section class="box purple c1 r3" id="pv-privat" data-s="privat">
+    <h2>Personvern for Låvli Privat</h2>
+    <div class="file">4-personvern-privat.md</div>
+    <p class="role">Forankret i vilkårene for Låvli Privat</p>
+    <ol>
+      <li>Om dokumentet</li>
+      <li>Hvem er behandlingsansvarlig?</li>
+      <li>Hva behandler vi, og hvorfor?<span class="tbl">tabell</span></li>
+      <li>Forskning</li>
+      <li>Formidling av advokat</li>
+      <li>Markedsføring</li>
+      <li>Hvem får opplysningene?<span class="tbl">tabell</span></li>
+      <li>Dine rettigheter</li>
+      <li>Kontakt og klage</li>
+    </ol>
+  </section>
+  <section class="box purple template c2 r3" id="pv-mal" data-s="bedrift lexolve-os plattform">
+    <h2>Felles oppsett for virksomhetstjenestene</h2>
+    <div class="file">4-personvern-&lt;tjeneste&gt;.md</div>
+    <p class="role">Brukes av personvern for Bedrift, Lexolve OS og Plattform</p>
+    <ol>
+      <li>Om dokumentet</li>
+      <li>Hvem er behandlingsansvarlig?</li>
+      <li>Hva behandles for virksomheten?<span class="tbl">tabell</span></li>
+      <li>Hva behandler Låvli selv?<span class="tbl">tabell</span></li>
+      <li>Hvem får opplysningene?<span class="tbl">tabell</span></li>
+      <li>Dine rettigheter</li>
+      <li>Kontakt og klage</li>
+    </ol>
+  </section>
+  <section class="box purple c3 r3" id="pv-bedrift" data-s="bedrift">
+    <h2>Personvern for Låvli Bedrift</h2>
+    <div class="file">4-personvern-bedrift.md</div>
+    <p class="role">Forankret i databehandleravtalen</p>
+    <p class="sub">Tillegg i felles oppsett:</p>
+    <ul>
+      <li>Forskning, eget punkt etter 4</li>
+      <li>Statistikk til samarbeidspartnere, linje i 5</li>
+    </ul>
+  </section>
+  <section class="box purple c4 r3" id="pv-os" data-s="lexolve-os">
+    <h2>Personvern for Lexolve OS</h2>
+    <div class="file">4-personvern-lexolve-os.md</div>
+    <p class="role">Forankret i databehandleravtalen</p>
+    <p class="sub">Tillegg i felles oppsett:</p>
+    <ul>
+      <li>Digital signering, eget punkt etter 3</li>
+    </ul>
+  </section>
+  <section class="box purple c5 r3" id="pv-plattform" data-s="plattform">
+    <h2>Personvern for Låvli Plattform</h2>
+    <div class="file">4-personvern-plattform.md</div>
+    <p class="role">Forankret i databehandleravtalen</p>
+    <p class="sub">Tillegg i felles oppsett:</p>
+    <ul>
+      <li>Egen instans og kunnskapsbase, eget punkt etter 3</li>
+      <li>Lagringstid som virksomheten stiller inn, rad i tabellen i 3</li>
+    </ul>
+  </section>
+
+</div>
+</div>
+
+<script>
+(function(){
+  var wrap=document.getElementById('wrap');
+  var g=document.getElementById('paths');
+  function r(id){
+    var b=document.getElementById(id).getBoundingClientRect(),w=wrap.getBoundingClientRect();
+    return {l:b.left-w.left,t:b.top-w.top,r:b.right-w.left,b:b.bottom-w.top,cx:(b.left+b.right)/2-w.left,cy:(b.top+b.bottom)/2-w.top};
+  }
+  function path(d){
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d);p.setAttribute('marker-end','url(#ah)');g.appendChild(p);
+  }
+  function down(from,to,x0){
+    var a=r(from),b=r(to),sx=(x0===undefined)?b.cx:x0,mid=b.t-22;
+    path('M'+sx+' '+a.b+' V'+mid+' H'+b.cx+' V'+(b.t-3));
+  }
+  function draw(){
+    g.innerHTML='';
+    if(getComputedStyle(document.getElementById('lines')).display==='none')return;
+    down('n0','privat');
+    down('n0','sikkerhet');
+    down('n0','generelle');
+    var gen=r('generelle');
+    down('generelle','bedrift',gen.cx);
+    down('generelle','os',gen.cx);
+    down('generelle','plattform',gen.cx);
+    var nn=r('n0');
+    ['aksept','kundeavtale'].forEach(function(id){
+      var a=r(id),dp=document.createElementNS('http://www.w3.org/2000/svg','path');
+      dp.setAttribute('d','M'+a.cx+' '+a.b+' V'+(nn.t-3));
+      dp.setAttribute('marker-end','url(#ah)');
+      dp.setAttribute('stroke-dasharray','5 4');
+      g.appendChild(dp);
+    });
+    var d=r('dpa');
+    path('M'+gen.r+' '+(gen.t+28)+' H'+(d.l-3));
+    var p=r('privat'),pv=r('pv-privat');
+    path('M'+p.cx+' '+p.b+' V'+(pv.t-3));
+    var gx=wrap.clientWidth-16;
+    var rowTop=Math.min(r('pv-bedrift').t,r('pv-os').t,r('pv-plattform').t),busY=rowTop-18;
+    ['pv-bedrift','pv-os','pv-plattform'].forEach(function(id){
+      var t=r(id);
+      path('M'+d.r+' '+(d.t+28)+' H'+gx+' V'+busY+' H'+t.cx+' V'+(t.t-3));
+    });
+  }
+  window.addEventListener('resize',draw);
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(draw);}
+  window.addEventListener('load',draw);
+  draw();
+})();
+</script>
+<script>
+(function(){
+  var wrap=document.getElementById('wrap'),boxes=wrap.querySelectorAll('.box'),items=document.querySelectorAll('.legend [data-f]'),locked=null;
+  function show(f){
+    if(f){wrap.setAttribute('data-hl','');}else{wrap.removeAttribute('data-hl');}
+    boxes.forEach(function(b){b.classList.toggle('hit',!!f&&b.matches(f));});
+    items.forEach(function(i){i.classList.toggle('on',i.getAttribute('data-f')===locked);});
+  }
+  items.forEach(function(i){
+    var f=i.getAttribute('data-f');
+    i.setAttribute('role','button');
+    i.addEventListener('mouseenter',function(){show(f);});
+    i.addEventListener('mouseleave',function(){show(locked);});
+    i.addEventListener('focus',function(){show(f);});
+    i.addEventListener('blur',function(){show(locked);});
+    i.addEventListener('click',function(){locked=(locked===f)?null:f;show(locked||f);});
+    i.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();i.click();}});
+  });
+})();
+</script>
+</body>
+</html>

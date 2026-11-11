@@ -1,0 +1,231 @@
+# Behandlinger av personopplysninger i Låvlis tjenester.
+# Eneste kilde for tabellene om behandling i personverndokumentene og i databehandleravtalen.
+# Verdier merket TODO venter på avklaringer.
+#
+# Nøkler: id, personal_data, data_subjects, purpose, services, controller, legal_basis, retention, deletion.
+# controller: lavli eller business. legal_basis fylles bare ut når controller er lavli.
+# Felt som er ulike mellom tjenestene, har én verdi per tjeneste.
+
+- id: innhold
+  personal_data:
+    privat: Spørsmål, KI-svar, opplastede dokumenter og tidsstempel, som kan omfatte særlige kategorier av personopplysninger
+    bedrift: Spørsmål, KI-svar, opplastede dokumenter og tidsstempel, som kan omfatte særlige kategorier av personopplysninger
+    lexolve-os: Saksinnhold, spørsmål, KI-svar, opplastede dokumenter og dokumenter som lages med maler, og tidsstempel, som kan omfatte særlige kategorier av personopplysninger
+    plattform: Spørsmål, KI-svar, opplastede dokumenter og tidsstempel, som kan omfatte særlige kategorier av personopplysninger
+  data_subjects:
+    privat: Brukere og personer som omtales i samtaler og dokumenter
+    bedrift: Brukere og personer som omtales i samtaler og dokumenter
+    lexolve-os: Brukere og personer som omtales i saker og dokumenter
+    plattform: Brukere og personer som omtales i samtaler og dokumenter
+  purpose: Levere tjenesten
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller:
+    privat: lavli
+    bedrift: business
+    lexolve-os: business
+    plattform: business
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav b (avtale med deg). For personer som omtales, art. 6 nr. 1 bokstav f (berettiget interesse i at brukeren får juridisk informasjon om sin sak). Særlige kategorier etter art. 9 nr. 2 bokstav f (rettskrav)
+  retention:
+    privat: 270 dager
+    bedrift: 270 dager
+    lexolve-os: Så lenge kontoen består
+    plattform: Stilles inn av virksomheten
+  deletion:
+    privat: Automatisk i trinn, med arkivering, gjenopprettingsperiode og permanent sletting. Ved opphør innen 30 dager, og i sikkerhetskopier innen ytterligere 30 dager
+    bedrift: Automatisk i trinn, med arkivering, gjenopprettingsperiode og permanent sletting. Ved opphør etter 30 dager, når fristen for å kreve eksport er ute, og i sikkerhetskopier innen ytterligere 30 dager
+    lexolve-os: Automatisk i trinn, med arkivering, gjenopprettingsperiode og permanent sletting. Ved opphør etter 30 dager, når fristen for å kreve eksport er ute, og i sikkerhetskopier innen ytterligere 30 dager
+    plattform: Automatisk i trinn, med arkivering, gjenopprettingsperiode og permanent sletting. Ved opphør etter 30 dager, når fristen for å kreve eksport er ute, og i sikkerhetskopier innen ytterligere 30 dager
+
+- id: statistikk
+  personal_data: Spørsmål, KI-svar og opplastede dokumenter
+  data_subjects: Brukere og personer som omtales i samtaler og dokumenter
+  purpose: Anonymisering for å lage aggregert statistikk
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller:
+    privat: lavli
+    bedrift: business
+    lexolve-os: business
+    plattform: business
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å forstå hvordan tjenesten brukes). Anonymiseringen er forenlig viderebehandling, jf. art. 5 nr. 1 bokstav b, art. 6 nr. 4 og art. 89 nr. 1
+  retention: Ikke lenger enn innholdet. Statistikken inneholder ikke personopplysninger
+
+- id: innlogging
+  personal_data:
+    privat: Navn, e-postadresse, rolle, innloggingsmetode, sesjonstokener og IP-adresse
+    bedrift: Navn, e-postadresse, rolle, innloggingsmetode, sesjonstokener og IP-adresse
+    lexolve-os: Navn, e-postadresse, telefonnummer, rolle og innloggingstokener
+    plattform: Navn, e-postadresse, rolle, innloggingsmetode, sesjonstokener og IP-adresse
+  data_subjects: Brukere
+  purpose: Innlogging, brukerkonto og tilgangskontroll
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller: lavli
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav b (avtale med deg)
+    bedrift: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å gi virksomhetens brukere sikker tilgang)
+    lexolve-os: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å gi virksomhetens brukere sikker tilgang)
+    plattform: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å gi virksomhetens brukere sikker tilgang)
+  retention: Så lenge kontoen eller avtalen består. Sesjoner så lenge sesjonen varer
+
+- id: driftslogger
+  personal_data: Trafikkdata, nettlesertype og operasjonelle logger, uten meldingsinnhold
+  data_subjects: Brukere
+  purpose: Drift, feilretting og sikkerhet
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller: lavli
+  legal_basis: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i sikker og stabil drift)
+  retention: 30 dager
+
+- id: agentspor
+  personal_data: Tekniske spor av agentkjøringer, som kan inneholde spørsmål og svar
+  data_subjects: Brukere og personer som omtales i samtaler
+  purpose: Feilsøking i KI-funksjonene
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller:
+    privat: lavli
+    bedrift: business
+    lexolve-os: business
+    plattform: business
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å rette feil i tjenesten)
+  retention:
+    privat: Om lag 14 dager
+    bedrift: Om lag 14 dager
+    lexolve-os: 30 dager
+    plattform: Om lag 14 dager
+
+- id: revisjonslogg
+  personal_data: Logg over hvem som har fått tilgang til eller åpnet innhold, og når
+  data_subjects: Brukere og Låvlis driftspersonell
+  purpose: Kontroll med tilgang til innhold
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller:
+    privat: lavli
+    bedrift: business
+    lexolve-os: business
+    plattform: business
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å kontrollere tilgang)
+  retention: 400 dager
+
+- id: sikkerhetskopier
+  personal_data: Kopier av opplysningene over
+  data_subjects: Som for opplysningene som kopieres
+  purpose: Gjenoppretting etter feil eller hendelser
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller:
+    privat: lavli
+    bedrift: business
+    lexolve-os: business
+    plattform: business
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å kunne gjenopprette tjenesten)
+  retention: Et begrenset antall generasjoner, lagret i EU/EØS
+  deletion: Innen 30 dager etter at opplysningene er slettet ved opphør
+
+- id: tjenestemeldinger
+  personal_data: Navn og e-postadresse
+  data_subjects: Brukere
+  purpose: Meldinger om konto, sikkerhet, innlogging og endringer i tjenesten og vilkårene
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller: lavli
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav b (avtale med deg)
+    bedrift: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å informere brukerne)
+    lexolve-os: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å informere brukerne)
+    plattform: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å informere brukerne)
+  retention: Så lenge kontoen består
+
+- id: markedsforing
+  personal_data:
+    privat: E-postadresse og samtykke
+    lexolve-os: Navn og e-postadresse
+  data_subjects:
+    privat: Brukere som har samtykket
+    lexolve-os: Brukere
+  purpose: Nyhetsbrev og tilbud på e-post
+  services: [privat, lexolve-os]
+  controller: lavli
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav a (samtykke), jf. markedsføringsloven § 15
+    lexolve-os: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å markedsføre egne tjenester til kunder), jf. markedsføringsloven § 15
+  retention:
+    privat: Til samtykket trekkes tilbake
+    lexolve-os: Til du melder deg av
+
+- id: advokatformidling
+  personal_data: Det brukeren selv velger å sende, eventuelt et saksresymé
+  data_subjects: Brukere og personer som omtales i saken
+  purpose: Formidle forespørsel om tilbud fra advokatfirma
+  services: [privat]
+  controller: lavli
+  legal_basis: GDPR art. 6 nr. 1 bokstav b (avtale med deg). For personer som omtales, art. 6 nr. 1 bokstav f (berettiget interesse i at brukeren får kontakt med advokat). Særlige kategorier etter art. 9 nr. 2 bokstav f (rettskrav)
+  retention: Så lenge kontoen består
+
+- id: forskning
+  personal_data: Pseudonymiserte utdrag av spørsmål og svar
+  data_subjects: Brukere og personer som omtales i samtaler
+  purpose: Forskningsprosjektet med SINTEF AS
+  services: [privat, bedrift]
+  controller: lavli
+  legal_basis: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å forske på kvalitetssikret juridisk KI), jf. art. 89 nr. 1. Særlige kategorier etter art. 9 nr. 2 bokstav j, jf. personopplysningsloven § 9
+  retention: Til forskningsprosjektet er avsluttet
+  deletion: Senest 1. mars 2028. Slettes ikke når samtalen slettes, fordi utdragene ikke kan knyttes til brukeren
+
+- id: produktanalyse
+  personal_data:
+    privat: Bruksstatistikk uten informasjonskapsler og uten lagret IP-adresse
+    bedrift: Bruksstatistikk uten informasjonskapsler og uten lagret IP-adresse
+    lexolve-os: Bruker-ID, e-postadresse og hendelser i tjenesten
+    plattform: Bruksstatistikk uten informasjonskapsler og uten lagret IP-adresse
+  data_subjects: Brukere
+  purpose: Forstå hvordan tjenesten brukes, og forbedre den
+  services: [privat, bedrift, lexolve-os, plattform]
+  controller: lavli
+  legal_basis:
+    privat: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å forbedre tjenesten)
+    bedrift: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å forbedre tjenesten)
+    lexolve-os: GDPR art. 6 nr. 1 bokstav a (samtykke), jf. ekomloven
+    plattform: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å forbedre tjenesten)
+  retention:
+    privat: 1 år
+    bedrift: 1 år
+    lexolve-os: 11 måneder
+    plattform: 1 år
+
+- id: tilbakemeldinger
+  personal_data: Fritekst brukeren skriver i tilbakemeldingsskjemaet
+  data_subjects: Brukere
+  purpose: Behandle tilbakemeldinger og forbedre tjenesten
+  services: [privat, bedrift, plattform]
+  controller: lavli
+  legal_basis: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å forbedre tjenesten)
+  retention: 1 år
+
+- id: signering
+  personal_data: Navn og e-postadresse til dem som signerer, dokumentet som signeres, fingeravtrykk av dokumentet og PAdES-signaturen
+  data_subjects: De som signerer
+  purpose: Elektronisk signering av dokumenter
+  services: [lexolve-os]
+  controller: business
+  retention: Så lenge kontoen består
+
+- id: fakturering
+  personal_data: Virksomhet, fakturakontakt, e-postadresse og betalingsstatus
+  data_subjects: Virksomhetens fakturakontakt
+  purpose: Fakturering og abonnement
+  services: [bedrift, lexolve-os, plattform]
+  controller: lavli
+  legal_basis: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å fakturere virksomheten) og bokstav c (bokføringsloven)
+  retention: 5 år etter utgangen av regnskapsåret
+
+- id: brukerstotte
+  personal_data: Navn, e-postadresse og innholdet i henvendelsen
+  data_subjects: Brukere
+  purpose: Brukerstøtte
+  services: [bedrift, lexolve-os, plattform]
+  controller: lavli
+  legal_basis: GDPR art. 6 nr. 1 bokstav f (berettiget interesse i å hjelpe brukerne)
+  retention: Så lenge kontoen består
+  deletion: Når kontoen slettes, eller tidligere hvis du ber om det

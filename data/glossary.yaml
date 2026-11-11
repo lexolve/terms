@@ -1,0 +1,28 @@
+# Definerte begreper og forkortelser.
+# Eneste kilde for ordlisten i de overordnede vilkårene og for hjelpeteksten til ord merket {.term}.
+#
+# Nøkler: term, definition, avoid, abbreviation.
+# avoid: ord som ikke skal brukes i dokumentene. Kontrolleres ved hver pull request.
+# Vanlige forkortelser som KI, EØS, GDPR og SSO defineres ikke.
+
+- term: forskningsprosjektet
+  definition: Forskningsprosjektet Låvli gjennomfører sammen med SINTEF AS, støttet av Norges forskningsråd, i perioden 1. september 2025 til 1. september 2027.
+
+- term: forskningsuttrekk
+  definition: Pseudonymiserte utdrag av spørsmål og svar som tas ut til forskningsprosjektet.
+  avoid: [uttrekk, forskningsutdrag]
+
+- term: innhold
+  definition: Spørsmål, KI-svar og opplastede dokumenter i tjenesten.
+  avoid: [samtaledata, interaksjonsdata]
+
+- term: KI-kreditt
+  definition: Enheten bruken av Låvli Bedrift og Låvli Plattform måles i, etter hvor mye arbeid KI-modellene gjør for å svare.
+
+- term: prøvetilgang
+  definition: Gratis tilgang til Låvli Bedrift med et begrenset antall KI-kreditter.
+  avoid: [prøveperiode]
+
+- term: virksomhet
+  definition: Juridisk person eller annen næringsdrivende som bruker Låvli Bedrift, Lexolve OS eller Låvli Plattform.
+  avoid: [kunden]

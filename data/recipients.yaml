@@ -1,0 +1,213 @@
+# Mottakere av personopplysninger i Låvlis tjenester.
+# Eneste kilde for mottakertabellene i personverndokumentene og for den offentlige listen over underleverandører.
+#
+# Nøkler: name, task, role, part, personal_data, location, transfer_basis, services.
+# role: processor, independent_controller eller unresolved.
+# part: business (behandling for virksomheten), lavli (Låvlis egen behandling) eller both.
+#
+# services: Låvli Privat, Bedrift og Plattform kjører på samme plattform.
+# Lexolve OS har egne leverandører, med unntak av Google Cloud og Customer.io.
+
+- name: Google Cloud (Google Ireland Ltd.)
+  task: Infrastruktur, database, lagring og kjøring av KI-modeller
+  role: processor
+  part: both
+  personal_data: All lagring
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, lexolve-os, plattform]
+
+- name: Anthropic
+  task: Claude-modeller for hovedresonnering, kjørt via Google Cloud
+  role: processor
+  part: both
+  personal_data: Spørsmål og svar
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, plattform]
+
+- name: Google (Gemini)
+  task: Sekundæroppgaver som klassifisering, oppslag og titler
+  role: processor
+  part: both
+  personal_data: Spørsmål og svar
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, plattform]
+
+- name: Amazon Web Services
+  task: Reserve for kjøring av KI-modeller ved failover
+  role: processor
+  part: both
+  personal_data: Spørsmål og svar ved failover
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, plattform]
+
+- name: Kinde
+  task: Innlogging og sesjon
+  role: processor
+  part: lavli
+  personal_data: Identitets- og autentiseringsdata
+  location: EU
+  transfer_basis: Standardkontrakter (SCC)
+  services: [privat, bedrift, plattform]
+
+- name: LangChain (LangSmith)
+  task: Teknisk sporing av agentkjøringer, med kort oppbevaring
+  role: processor
+  part: both
+  personal_data: Kan inneholde spørsmål og svar
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, plattform]
+
+- name: PostHog
+  task: Produktanalyse uten informasjonskapsler, autocapture eller opptak av økter
+  role: processor
+  part: lavli
+  personal_data: Bruksstatistikk. Ikke samtaleinnhold, men fritekst i tilbakemeldingsskjemaet
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, plattform]
+
+- name: Staan.ai
+  task: Websøk utenfor rettskildebasene, med maskert søkestreng
+  role: processor
+  part: both
+  personal_data: Maskert søkestreng
+  location: EU
+  services: [privat, bedrift, plattform]
+
+- name: Customer.io
+  task: Tjenestemeldinger
+  role: processor
+  part: lavli
+  personal_data: Kontaktopplysninger
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [privat, bedrift, plattform]
+
+- name: Google (Vertex AI og Gemini)
+  task: Saksagent, dokumentanalyse, utlesing av opplysninger, sammendrag, søk og oversettelse
+  role: processor
+  part: business
+  personal_data: Saksinnhold, dokumenter og spørsmål
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [lexolve-os]
+
+- name: Google Firebase
+  task: Innlogging
+  role: processor
+  part: lavli
+  personal_data: E-postadresse, telefonnummer og innloggingstokener
+  location: USA
+  transfer_basis: Data Privacy Framework (DPF), med standardkontrakter (SCC) som reserve
+  services: [lexolve-os]
+
+- name: Twilio
+  task: SMS og engangskoder ved innlogging
+  role: processor
+  part: lavli
+  personal_data: Telefonnummer og innholdet i SMS-en
+  location: USA
+  transfer_basis: Data Privacy Framework (DPF) og bindende virksomhetsregler (BCR), med standardkontrakter (SCC) som reserve
+  services: [lexolve-os]
+
+- name: SendGrid (Twilio)
+  task: E-post med invitasjoner til konto og signering, og kontroll av e-postadresser
+  role: processor
+  part: both
+  personal_data: Navn, e-postadresse og innholdet i e-posten, for eksempel dokumenttittel
+  location: USA
+  transfer_basis: Data Privacy Framework (DPF), med standardkontrakter (SCC) som reserve
+  services: [lexolve-os]
+
+- name: Chargebee
+  task: Fakturering og abonnement
+  role: processor
+  part: lavli
+  personal_data: Virksomhet, fakturakontakt, e-postadresse og betalingsstatus
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [bedrift, lexolve-os, plattform]
+
+- name: Customer.io
+  task: Markedsføring og meldinger gjennom kundeforholdet
+  role: processor
+  part: lavli
+  personal_data: Bruker-ID, e-postadresse, egenskaper og hendelser
+  location: EU
+  transfer_basis: Standardkontrakter (SCC) som tilleggsgaranti
+  services: [lexolve-os]
+
+- name: Intercom
+  task: Brukerstøtte
+  role: processor
+  part: lavli
+  personal_data: Navn, e-postadresse og innholdet i henvendelsen
+  location: USA
+  transfer_basis: Data Privacy Framework (DPF), med standardkontrakter (SCC) som reserve
+  services: [lexolve-os]
+
+- name: Amplitude
+  task: Produktanalyse og inntektshendelser
+  role: processor
+  part: lavli
+  personal_data: Bruker-ID, e-postadresse og hendelser
+  location: USA
+  transfer_basis: Data Privacy Framework (DPF), med standardkontrakter (SCC) som reserve
+  services: [lexolve-os]
+
+- name: Signicat
+  task: Elektronisk signering
+  role: processor
+  part: business
+  personal_data: Navn og e-postadresse til dem som signerer, og dokumentene som skal signeres
+  location: Norge
+  services: [lexolve-os]
+
+- name: Tavily
+  task: Websøk for saksagenten
+  role: processor
+  part: business
+  personal_data: Søkestrenger som er avidentifisert før de sendes, uten personopplysninger
+  location: USA
+  services: [lexolve-os]
+
+- name: SINTEF AS
+  task: Forskningspartner i forskningsprosjektet
+  role: independent_controller
+  part: lavli
+  personal_data: Pseudonymiserte forskningsuttrekk
+  location: Norge eller EU/EØS
+  services: [privat, bedrift]
+
+- name: Samarbeidende advokatfirma
+  task: Tilbud om advokatbistand, bare etter brukerens uttrykkelige forespørsel
+  role: independent_controller
+  part: lavli
+  personal_data: Det brukeren selv velger å sende
+  location: Norge
+  services: [privat]
+
+- name: Lovdata
+  task: Søk i rettskilder
+  role: independent_controller
+  part: business
+  personal_data:
+    privat: Automatisk genererte søkeord
+    bedrift: Automatisk genererte søkeord
+    lexolve-os: Spørsmålsteksten, som kan inneholde detaljer fra saken
+    plattform: Automatisk genererte søkeord
+  location: Norge
+  services: [privat, bedrift, lexolve-os, plattform]
+
+- name: Offentlige myndigheter
+  task: Utlevering når loven krever det
+  role: independent_controller
+  part: both
+  personal_data: Det loven krever
+  location: Norge
+  services: [privat, bedrift, lexolve-os, plattform]

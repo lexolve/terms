@@ -1,0 +1,47 @@
+name: Kontroll av dokumentene
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python scripts/gendoc.py check
+      - run: sudo apt-get update && sudo apt-get install -y pandoc libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz-subset0
+      - run: python scripts/gendoc.py build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dokumenter-html
+          path: site/
+          retention-days: 30
+      - if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
