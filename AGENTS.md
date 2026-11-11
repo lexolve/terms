@@ -266,7 +266,10 @@ Når en endring krever varsel:
 - Samle endringer som kommer samtidig, i ett varsel med én dato.
 - Er du i tvil, skriv vurderingen og spør i stedet for å velge den strengeste løsningen.
 
-## Commit-meldinger
+## Branch og commit-meldinger
+
+`main` er beskyttet og tar ikke imot commits direkte.
+Lag en egen branch for hver endring, push den, og lever endringen som pull request mot `main`.
 
 Skriv commit-meldinger på engelsk, med en kort oppsummering i imperativ på første linje, for eksempel «Add notice rules for changes».
 Dokumentene og beskrivelsen av pull requesten skrives fortsatt på norsk.

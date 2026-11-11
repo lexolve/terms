@@ -534,7 +534,9 @@ def diagram_with_links(names, pdf=True):
     css += (".legend a.pdf{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid var(--gray-b);"
             "border-radius:999px;background:var(--gray-f);color:var(--ink);font-weight:500;text-decoration:none}"
             ".legend a.pdf:hover,.legend a.pdf:focus-visible{border-color:var(--head);box-shadow:0 0 0 1px var(--head);outline:none}"
-            ".legend a.pdf svg{width:13px;height:13px}")
+            ".legend a.pdf svg{width:13px;height:13px}"
+            ".legend a.pdf{transition:opacity .15s}.legend a.pdf.dim{opacity:.35}"
+            ".legend a.pdf.dim:hover,.legend a.pdf.dim:focus-visible{opacity:1}")
     page = page.replace("</style>", css + "</style>", 1)
     if not pdf:
         return finish(page)
@@ -543,7 +545,8 @@ def diagram_with_links(names, pdf=True):
     links = ""
     for s in PACKAGES:
         selector = html.escape(",".join('[data-doc="' + d + '"]' for d in PACKAGES[s]))
-        links += f'\n      <a class="pdf" href="{package_path(s)}" data-docs="{selector}">{icon}{SERVICE_NAMES[s]}</a>'
+        links += (f'\n      <a class="pdf" href="{package_path(s)}" data-service="{s}" data-docs="{selector}">'
+                  f'{icon}{SERVICE_NAMES[s]}</a>')
     row = f'    <div class="legend" role="group" aria-label="Last ned som PDF">\n      <b>Last ned</b>{links}\n    </div>\n'
     end = "  </div>\n</header>"
     assert page.count(end) == 1, "Fant ikke slutten på forklaringene i diagrammet"
@@ -557,7 +560,8 @@ def finish(page):
               "var w=document.getElementById('wrap'),bs=w.querySelectorAll('.box');"
               "document.querySelectorAll('a.pdf').forEach(function(l){var s=l.getAttribute('data-docs');"
               "function on(){w.setAttribute('data-hl','');bs.forEach(function(b){b.classList.toggle('hit',b.matches(s));});}"
-              "function off(){w.removeAttribute('data-hl');bs.forEach(function(b){b.classList.remove('hit');});}"
+              "function off(){if(window.showLocked){showLocked();return;}"
+              "w.removeAttribute('data-hl');bs.forEach(function(b){b.classList.remove('hit');});}"
               "l.addEventListener('mouseenter',on);l.addEventListener('focus',on);"
               "l.addEventListener('mouseleave',off);l.addEventListener('blur',off);});</script>")
     return page.replace("</body>", script + "</body>", 1)

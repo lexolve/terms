@@ -177,7 +177,7 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
   </section>
 
   <div class="lvl r1" style="grid-column:1">Nivå 2</div>
-  <section class="box coral c1 r1" id="privat" data-s="privat">
+  <section class="box coral c1 r1" id="d-privat" data-s="privat">
     <h2>Vilkår for Låvli Privat</h2>
     <div class="file">2-vilkar-privat.md</div>
     <p class="role">Hjemlet i de overordnede vilkårene</p>
@@ -252,7 +252,7 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
   </section>
 
   <div class="lvl r2" style="grid-column:1">Nivå 3</div>
-  <section class="box teal c3 r2" id="bedrift" data-s="bedrift">
+  <section class="box teal c3 r2" id="d-bedrift" data-s="bedrift">
     <h2>Spesielle vilkår for Låvli Bedrift</h2>
     <div class="file">3-spesielle-vilkar-bedrift.md</div>
     <p class="role">Tillegg til de generelle vilkårene</p>
@@ -264,7 +264,7 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
       <li>Oppsigelse og sletting</li>
     </ol>
   </section>
-  <section class="box teal c4 r2" id="os" data-s="lexolve-os">
+  <section class="box teal c4 r2" id="d-os" data-s="lexolve-os">
     <h2>Spesielle vilkår for Lexolve OS</h2>
     <div class="file">3-spesielle-vilkar-lexolve-os.md</div>
     <p class="role">Tillegg til de generelle vilkårene</p>
@@ -276,7 +276,7 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
       <li>Oppsigelse og sletting</li>
     </ol>
   </section>
-  <section class="box teal c5 r2" id="plattform" data-s="plattform">
+  <section class="box teal c5 r2" id="d-plattform" data-s="plattform">
     <h2>Spesielle vilkår for Låvli Plattform</h2>
     <div class="file">3-spesielle-vilkar-plattform.md</div>
     <p class="role">Tillegg til de generelle vilkårene</p>
@@ -372,13 +372,13 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
   function draw(){
     g.innerHTML='';
     if(getComputedStyle(document.getElementById('lines')).display==='none')return;
-    down('n0','privat');
+    down('n0','d-privat');
     down('n0','sikkerhet');
     down('n0','generelle');
     var gen=r('generelle');
-    down('generelle','bedrift',gen.cx);
-    down('generelle','os',gen.cx);
-    down('generelle','plattform',gen.cx);
+    down('generelle','d-bedrift',gen.cx);
+    down('generelle','d-os',gen.cx);
+    down('generelle','d-plattform',gen.cx);
     var nn=r('n0');
     ['aksept','kundeavtale'].forEach(function(id){
       var a=r(id),dp=document.createElementNS('http://www.w3.org/2000/svg','path');
@@ -389,7 +389,7 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
     });
     var d=r('dpa');
     path('M'+gen.r+' '+(gen.t+28)+' H'+(d.l-3));
-    var p=r('privat'),pv=r('pv-privat');
+    var p=r('d-privat'),pv=r('pv-privat');
     path('M'+p.cx+' '+p.b+' V'+(pv.t-3));
     var gx=wrap.clientWidth-16;
     var rowTop=Math.min(r('pv-bedrift').t,r('pv-os').t,r('pv-plattform').t),busY=rowTop-18;
@@ -407,10 +407,14 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
 <script>
 (function(){
   var wrap=document.getElementById('wrap'),boxes=wrap.querySelectorAll('.box'),items=document.querySelectorAll('.legend [data-f]'),locked=null;
+  var svc=/^\[data-s~="([a-z-]+)"\]$/;
   function show(f){
     if(f){wrap.setAttribute('data-hl','');}else{wrap.removeAttribute('data-hl');}
     boxes.forEach(function(b){b.classList.toggle('hit',!!f&&b.matches(f));});
     items.forEach(function(i){i.classList.toggle('on',i.getAttribute('data-f')===locked);});
+    // Er en tjeneste valgt, tones nedlastingsknappene for de andre tjenestene ned.
+    var m=locked&&locked.match(svc);
+    document.querySelectorAll('a.pdf[data-service]').forEach(function(a){a.classList.toggle('dim',!!m&&a.getAttribute('data-service')!==m[1]);});
   }
   items.forEach(function(i){
     var f=i.getAttribute('data-f');
@@ -419,9 +423,25 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
     i.addEventListener('mouseleave',function(){show(locked);});
     i.addEventListener('focus',function(){show(f);});
     i.addEventListener('blur',function(){show(locked);});
-    i.addEventListener('click',function(){locked=(locked===f)?null:f;show(locked||f);});
+    i.addEventListener('click',function(){locked=(locked===f)?null:f;show(locked||f);setHash();});
     i.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();i.click();}});
   });
+  // Adressen vilkar.lavli.no/#privat, #bedrift, #lexolve-os eller #plattform velger tjenesten.
+  function setHash(){
+    var m=locked&&locked.match(svc),url=location.pathname+location.search+(m?'#'+m[1]:'');
+    if(url!==location.pathname+location.search+location.hash){history.replaceState(null,'',url);}
+  }
+  function fromHash(){
+    var h=decodeURIComponent(location.hash.slice(1)).toLowerCase();
+    if(h==='os'){h='lexolve-os';}
+    var f='[data-s~="'+h+'"]',found=false;
+    items.forEach(function(i){if(i.getAttribute('data-f')===f){found=true;}});
+    if(found){locked=f;show(f);}else if(!h&&locked&&svc.test(locked)){locked=null;show(null);}
+  }
+  window.addEventListener('hashchange',fromHash);
+  fromHash();
+  // Brukes av lenkene til PDF-pakkene for å gå tilbake til valgt tjeneste.
+  window.showLocked=function(){show(locked);};
 })();
 </script>
 </body>
