@@ -8,9 +8,10 @@ effective_from: 2026-11-11
 
 # Generelle vilkår for virksomheter
 
+Disse vilkårene gjelder for Låvli Bedrift, Lexolve OS og Låvli Plattform, i tillegg til [Overordnede vilkår for Låvlis tjenester](1-overordnede-vilkar.md).
+
 ## 1 Hvem tjenestene er for {#eligibility}
 
-Disse vilkårene gjelder for Låvli Bedrift, Lexolve OS og Låvli Plattform.
 Tjenestene er for [virksomheter]{.term key=virksomhet}, også enkeltpersonforetak.
 De spesielle vilkårene for hver tjeneste gjelder i tillegg.
 

@@ -44,7 +44,7 @@ fields:
     label: Oppsett før produksjon
     question: Hva skal Låvli sette opp før tjenesten settes i produksjon, for eksempel kunnskapsbase og innlogging med virksomhetens identitetsløsning?
     type: text
-    required: true
+    required: false
   - name: kreditterPerManed
     label: KI-kreditter per måned
     question: Hvor mange KI-kreditter har virksomheten per måned?
@@ -72,6 +72,11 @@ fields:
       - { name: post, label: Post }
       - { name: omfang, label: Omfang }
       - { name: pris, label: Pris }
+  - name: betingelser
+    label: Andre betingelser for pris, forbruk og betaling
+    question: Er det avtalt andre betingelser for pris, forbruk eller betaling, for eksempel pristak, overføring av ubrukte KI-kreditter eller en annen pris for første periode?
+    type: text
+    required: false
   - name: fakturering
     label: Fakturering
     question: Hvor ofte faktureres faste beløp og overforbruk?
@@ -87,9 +92,14 @@ fields:
     question: Hvilken dato begynner den første avtaleperioden?
     type: date
     required: true
+  - name: varighet
+    label: Avtalt varighet
+    question: Er det avtalt en annen varighet enn 12 måneder med automatisk fornyelse, for eksempel en testperiode?
+    type: text
+    required: false
   - name: avvik
     label: Avvik
-    question: "Hvilke avvik fra standardvilkårene er avtalt? Hvert avvik begynner med «I stedet for punkt … gjelder: …», «I tillegg til punkt … gjelder: …» eller «I tillegg gjelder: …»."
+    question: "Hvilke reelle endringer i standardvilkårene er avtalt, for eksempel om ansvar, tjenestenivå, eksportfrist eller forskning? Hvert avvik begynner med «I stedet for punkt … gjelder: …», «I tillegg til punkt … gjelder: …» eller «I tillegg gjelder: …»."
     type: list
     required: false
   - name: lavliSignatar
@@ -120,7 +130,9 @@ Den som er oppgitt som kontaktperson for [virksomheten]{.term key=virksomhet}, e
 
 Låvli leverer Låvli Plattform til [virksomheten]{.term key=virksomhet} på {{domene}}.lavli.no.
 Tjenesten settes i produksjon {{produksjonsdato}}.
+{{#if oppsett}}
 Før det setter Låvli opp {{oppsett}}.
+{{/if}}
 
 ## 3 Bestilling {#order}
 
@@ -130,17 +142,26 @@ Før det setter Låvli opp {{oppsett}}.
 - {{post}}: {{omfang}}, {{pris}} kr.
 {{/each}}
 
+{{#if betingelser}}
+{{betingelser}}
+
+{{/if}}
 Faste beløp faktureres {{fakturering}} på forskudd, overforbruk {{fakturering}} etterskuddsvis.
 Prisene kan justeres etter [punkt 2 om avtale, pris og betaling](3-spesielle-vilkar-plattform.md#payment) i Spesielle vilkår for Låvli Plattform.
 
 ## 4 Avtaleperiode {#term}
 
 Den første avtaleperioden begynner {{startdato}}.
-Varighet og fornyelse følger [punkt 5 om oppsigelse og sletting](3-spesielle-vilkar-plattform.md#termination) i Spesielle vilkår for Låvli Plattform.
+{{#if varighet}}
+{{varighet}}
+{{else}}
+Avtalen gjelder for 12 måneder om gangen og fornyes automatisk.
+{{/if}}
+Oppsigelse og sletting følger ellers [punkt 5 om oppsigelse og sletting](3-spesielle-vilkar-plattform.md#termination) i Spesielle vilkår for Låvli Plattform.
 
 ## 5 Avtaledokumenter {#documents}
 
-Følgende dokumenter er også en del av avtalen, i gjeldende versjon, og er tilgjengelige på [vilkar.lavli.no](https://vilkar.lavli.no):
+Følgende dokumenter er også en del av avtalen, i gjeldende versjon på [vilkar.lavli.no](https://vilkar.lavli.no):
 
 - [Overordnede vilkår for Låvlis tjenester](1-overordnede-vilkar.md)
 - [Generelle vilkår for virksomheter](2-generelle-vilkar-virksomheter.md)
@@ -150,7 +171,7 @@ Følgende dokumenter er også en del av avtalen, i gjeldende versjon, og er tilg
 - [Sikkerhet](2-sikkerhet.md)
 
 Endringer i dokumentene varsles etter reglene i dem, og gjelder også for denne avtalen.
-Avvikene nedenfor kan bare endres skriftlig av begge parter.
+Det som står i denne kundeavtalen, kan bare endres skriftlig av begge parter.
 
 ## 6 Avvik fra standardvilkårene {#deviations}
 

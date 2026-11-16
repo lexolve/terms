@@ -8,6 +8,8 @@ effective_from: 2026-11-11
 
 # Spesielle vilkår for Låvli Bedrift
 
+Disse vilkårene gjelder for Låvli Bedrift, i tillegg til [Generelle vilkår for virksomheter](2-generelle-vilkar-virksomheter.md) og [Overordnede vilkår for Låvlis tjenester](1-overordnede-vilkar.md).
+
 ## 1 Tjenesten {#service}
 
 Låvli Bedrift er en juridisk KI-assistent som leveres i felles områder for flere [virksomheter]{.term key=virksomhet}.

@@ -8,6 +8,8 @@ effective_from: 2026-11-11
 
 # Spesielle vilkår for Låvli Plattform
 
+Disse vilkårene gjelder for Låvli Plattform, i tillegg til [Generelle vilkår for virksomheter](2-generelle-vilkar-virksomheter.md) og [Overordnede vilkår for Låvlis tjenester](1-overordnede-vilkar.md).
+
 ## 1 Tjenesten {#service}
 
 Låvli Plattform er en egen instans av Låvli for én [virksomhet]{.term key=virksomhet}.
@@ -49,7 +51,7 @@ Så lenge det ikke er avtalt et tjenestenivå, er Låvli ikke ansvarlig for mang
 
 ## 5 Oppsigelse og sletting {#termination}
 
-Avtalen gjelder for 12 måneder om gangen og fornyes automatisk.
+Avtalen gjelder for 12 måneder om gangen og fornyes automatisk, med mindre kundeavtalen sier noe annet.
 [Virksomheten]{.term key=virksomhet} kan si opp avtalen med virkning fra utløpet av en avtaleperiode, med minst 60 dagers varsel.
 Låvli kan si opp avtalen med minst 90 dagers varsel til utløpet av en avtaleperiode.
 
