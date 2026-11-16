@@ -43,6 +43,9 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.45}
 header{max-width:1720px;margin:0 auto;padding:28px 32px 8px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.diagram-head{max-width:1720px;margin:28px auto 0;padding:8px 32px 0;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.diagram-head h2{font-size:17px;font-weight:600;color:var(--head);margin:0 0 8px}
+@media (max-width:1100px){.diagram-head{padding:8px 16px 0}}
 h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var(--head)}
 .brand{display:block;margin:0 0 14px;line-height:0}
 .brand img{height:36px;width:auto}
@@ -105,8 +108,14 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
   <div>
     <a class="brand" href="https://lavli.no"><picture><source srcset="assets/logo-white.png" media="(prefers-color-scheme:dark)"><img src="assets/logo.png" alt="Låvli" width="92" height="36"></picture></a>
     <h1>Avtalevilkår for Låvlis tjenester</h1>
-    <p class="lead">Her finner du vilkårene, databehandleravtalen, sikkerhetsbeskrivelsen og personverninformasjon for Låvli Privat, Låvli Bedrift, Lexolve OS og Låvli Plattform. Dokumentene bygger på hverandre i nivåer. De overordnede vilkårene gjelder alle tjenestene, og hver tjeneste har i tillegg egne dokumenter på nivåene under. Velg en tjeneste for å se hvilke dokumenter som gjelder for den.</p>
-    <p class="lead">Heltrukne linjer viser hvor hvert dokument er hjemlet eller forankret. Stiplede linjer viser hvordan avtalen inngås: med signert kundeavtale for Låvli Plattform, og ved aksept i tjenesten for de andre. Klikk på et dokument for å lese det. Endringene står i <a href="https://github.com/lexolve/terms/commits/main">historikken på GitHub</a>.</p>
+    <p class="lead">Her finner du vilkårene, databehandleravtalen, sikkerhetsbeskrivelsen og personverninformasjon for Låvli Privat, Låvli Bedrift, Lexolve OS og Låvli Plattform. Velg tjenesten din for å se hvilke dokumenter som gjelder for den. Endringene står i <a href="https://github.com/lexolve/terms/commits/main">historikken på GitHub</a>.</p>
+  </div>
+</header>
+
+<div class="diagram-head">
+  <div>
+    <h2>Slik henger dokumentene sammen</h2>
+    <p class="lead">Dokumentene bygger på hverandre i nivåer. De overordnede vilkårene gjelder alle tjenestene, og hver tjeneste har i tillegg egne dokumenter på nivåene under. Heltrukne linjer viser hvor hvert dokument er hjemlet eller forankret. Stiplede linjer viser hvordan avtalen inngås: med signert kundeavtale for Låvli Plattform, og ved aksept i tjenesten for de andre. Velg en tjeneste eller en farge for å fremheve dokumentene, og klikk på et dokument for å lese det.</p>
   </div>
   <div class="filters">
     <div class="legend" role="group" aria-label="Tjenester">
@@ -124,7 +133,7 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
       <span data-f=".purple" tabindex="0"><i class="sw purple"></i>Personvern</span>
     </div>
   </div>
-</header>
+</div>
 
 <div id="wrap">
 <svg id="lines" aria-hidden="true">
@@ -412,9 +421,9 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.02em;color:var
     if(f){wrap.setAttribute('data-hl','');}else{wrap.removeAttribute('data-hl');}
     boxes.forEach(function(b){b.classList.toggle('hit',!!f&&b.matches(f));});
     items.forEach(function(i){i.classList.toggle('on',i.getAttribute('data-f')===locked);});
-    // Er en tjeneste valgt, tones nedlastingsknappene for de andre tjenestene ned.
+    // Er en tjeneste valgt, fremheves kolonnen for den i oversikten, og de andre tones ned.
     var m=locked&&locked.match(svc);
-    document.querySelectorAll('a.pdf[data-service]').forEach(function(a){a.classList.toggle('dim',!!m&&a.getAttribute('data-service')!==m[1]);});
+    document.querySelectorAll('[data-service]').forEach(function(a){var s=a.getAttribute('data-service');a.classList.toggle('dim',!!m&&s!==m[1]);a.classList.toggle('sel',!!m&&s===m[1]);});
   }
   items.forEach(function(i){
     var f=i.getAttribute('data-f');
