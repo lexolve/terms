@@ -170,7 +170,6 @@ Følgende dokumenter er også en del av avtalen, i gjeldende versjon på [vilkar
 - [Personvern for Låvli Plattform](4-personvern-plattform.md)
 - [Sikkerhet](2-sikkerhet.md)
 
-Dokumentene er lagt ved som PDF til informasjon. Det er versjonen på vilkar.lavli.no som gjelder.
 Endringer i dokumentene varsles etter reglene i dem, og gjelder også for denne avtalen.
 Det som står i denne kundeavtalen, kan bare endres skriftlig av begge parter.
 
