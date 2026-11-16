@@ -442,7 +442,8 @@ h1{{font-size:32px;font-weight:600;line-height:1.2;letter-spacing:-.02em;color:v
 .meta{{color:var(--muted);font-size:13px;margin:0 0 24px}}
 .meta a{{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;color:inherit}}
 .meta a:hover{{color:var(--accent)}}
-.downloads{{color:var(--muted);font-size:13px;margin:-16px 0 24px}}
+.scope{{color:var(--muted);font-size:13px;margin:-16px 0 24px}}
+.scope p{{margin:0 0 2px}}
 h2{{font-size:19px;font-weight:600;color:var(--head);margin:32px 0 8px;padding-top:12px;border-top:1px solid var(--line)}}
 h3{{font-size:16px;font-weight:600;margin:20px 0 6px}}
 a{{color:var(--link);text-underline-offset:2px}}
@@ -503,8 +504,8 @@ def page_markdown(text, terms):
     return body
 
 
-def diagram_with_links(names, pdf=True):
-    """Diagrammet som forside, med lenke fra hver dokumentboks til HTML-versjonen."""
+def diagram_with_links(names, pdf=True, titles=None):
+    """Forsiden: oversikt per tjeneste, og diagrammet med lenke fra hver dokumentboks til HTML-versjonen."""
     page = DIAGRAM.read_text(encoding="utf-8")
 
     def box(m):
@@ -531,27 +532,73 @@ def diagram_with_links(names, pdf=True):
            ".box h2{margin-bottom:8px}"
            ".box:has(a.doc):hover{box-shadow:0 0 0 2px var(--hl),0 6px 18px var(--card-shadow)}"
            ".box:has(a.doc){cursor:pointer}")
-    css += (".legend a.pdf{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid var(--gray-b);"
-            "border-radius:999px;background:var(--gray-f);color:var(--ink);font-weight:500;text-decoration:none}"
-            ".legend a.pdf:hover,.legend a.pdf:focus-visible{border-color:var(--head);box-shadow:0 0 0 1px var(--head);outline:none}"
-            ".legend a.pdf svg{width:13px;height:13px}"
-            ".legend a.pdf{transition:opacity .15s}.legend a.pdf.dim{opacity:.35}"
-            ".legend a.pdf.dim:hover,.legend a.pdf.dim:focus-visible{opacity:1}")
+    css += OVERVIEW_CSS
     page = page.replace("</style>", css + "</style>", 1)
-    if not pdf:
-        return finish(page)
+    anchor = "</header>\n\n<div class=\"diagram-head\">"
+    assert page.count(anchor) == 1, "Fant ikke slutten på toppen av forsiden"
+    page = page.replace(anchor, "</header>\n\n" + overview(names, pdf, titles or {}) + "\n<div class=\"diagram-head\">")
+    return finish(page)
+
+
+OVERVIEW_CSS = (
+    ".overview{max-width:1720px;margin:0 auto;padding:8px 32px 8px}"
+    ".overview>h2{font-size:17px;font-weight:600;color:var(--head);margin:8px 0 12px}"
+    ".cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}"
+    ".card{background:var(--gray-f);border:1.5px solid var(--gray-b);border-top:5px solid var(--teal-b);border-radius:14px;"
+    "padding:14px 16px;display:flex;flex-direction:column;gap:8px;scroll-margin-top:12px;transition:opacity .15s,box-shadow .15s,border-color .15s}"
+    ".card[data-service=privat]{border-top-color:var(--coral-b)}"
+    ".card h3{margin:0;font-size:16px}"
+    ".card .pick{all:unset;cursor:pointer;font-weight:600;color:var(--ink);border-radius:4px}"
+    ".card .pick:hover,.card .pick:focus-visible{color:var(--accent);text-decoration:underline}"
+    ".card .how{margin:0;font-size:12.5px;color:var(--muted)}"
+    ".card ol{margin:0;padding-left:20px;font-size:13.5px}"
+    ".card li{margin:3px 0}"
+    ".card .card-note{color:var(--muted);font-size:12.5px}"
+    ".card ol a{color:var(--ink);text-underline-offset:2px}"
+    ".card ol a:hover{color:var(--accent)}"
+    ".card a.pdf{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;"
+    "border:1px solid var(--gray-b);border-radius:999px;color:var(--ink);font-size:13px;font-weight:500;text-decoration:none}"
+    ".card a.pdf:hover,.card a.pdf:focus-visible{border-color:var(--head);box-shadow:0 0 0 1px var(--head);outline:none}"
+    ".card a.pdf svg{width:13px;height:13px}"
+    ".card.dim{opacity:.4}.card.dim:hover,.card.dim:focus-within{opacity:1}"
+    ".card.sel{border-color:var(--head);box-shadow:0 0 0 1px var(--head)}"
+    "@media (max-width:1100px){.overview{padding:8px 16px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}"
+    "@media (max-width:600px){.cards{grid-template-columns:minmax(0,1fr)}}"
+)
+
+HOW = {
+    "privat": "Avtalen inngås når du godtar vilkårene i tjenesten.",
+    "bedrift": "Avtalen inngås når vilkårene godtas i tjenesten.",
+    "lexolve-os": "Avtalen inngås når vilkårene godtas i tjenesten.",
+    "plattform": "Avtalen inngås når kundeavtalen signeres.",
+}
+
+
+def overview(names, pdf, titles):
+    """Én kolonne per tjeneste med dokumentene i lesefølge og lenke til PDF-pakken."""
     icon = ('<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" '
             'stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg>')
-    links = ""
-    for s in PACKAGES:
-        selector = html.escape(",".join('[data-doc="' + d + '"]' for d in PACKAGES[s]))
-        links += (f'\n      <a class="pdf" href="{package_path(s)}" data-service="{s}" data-docs="{selector}">'
-                  f'{icon}{SERVICE_NAMES[s]}</a>')
-    row = f'    <div class="legend" role="group" aria-label="Last ned som PDF">\n      <b>Last ned</b>{links}\n    </div>\n'
-    end = "  </div>\n</header>"
-    assert page.count(end) == 1, "Fant ikke slutten på forklaringene i diagrammet"
-    page = page.replace(end, row + end)
-    return finish(page)
+    cards = ""
+    for s, docs in PACKAGES.items():
+        items = "".join(
+            f'<li><a href="{page_name(d)}">{html.escape(titles.get(d, page_name(d)))}</a></li>'
+            for d in docs if d in names
+        )
+        if s == "plattform":
+            # Kundeavtalen publiseres ikke, men hører med i oversikten fordi den binder virksomheten til pakken.
+            items = '<li>Kundeavtale <span class="card-note">utarbeides og signeres for hver virksomhet</span></li>' + items
+        # Kundeavtalen er nivå 0, så listen for Plattform begynner på 0.
+        start = ' start="0"' if s == "plattform" else ""
+        download = ""
+        if pdf:
+            selector = html.escape(",".join('[data-doc="' + d + '"]' for d in docs))
+            download = f'<a class="pdf" href="{package_path(s)}" data-docs="{selector}">{icon}Last ned alle som PDF</a>'
+        cards += (f'\n  <article class="card" data-service="{s}">'
+                  f'<h3><button type="button" class="pick" data-pick="{s}">{SERVICE_NAMES[s]}</button></h3>'
+                  f'<p class="how">{HOW[s]}</p><ol{start}>{items}</ol>{download}</article>')
+    return ('<section class="overview" aria-label="Dokumentene for hver tjeneste">\n'
+            '  <h2>Dokumentene for hver tjeneste</h2>\n'
+            f'  <div class="cards">{cards}\n  </div>\n</section>\n')
 
 
 def finish(page):
@@ -563,7 +610,15 @@ def finish(page):
               "function off(){if(window.showLocked){showLocked();return;}"
               "w.removeAttribute('data-hl');bs.forEach(function(b){b.classList.remove('hit');});}"
               "l.addEventListener('mouseenter',on);l.addEventListener('focus',on);"
-              "l.addEventListener('mouseleave',off);l.addEventListener('blur',off);});</script>")
+              "l.addEventListener('mouseleave',off);l.addEventListener('blur',off);});"
+              "document.querySelectorAll('.card .pick').forEach(function(b){b.addEventListener('click',function(){"
+              "var f='[data-s~=\"'+b.getAttribute('data-pick')+'\"]';"
+              "document.querySelectorAll('.legend .svc').forEach(function(i){if(i.getAttribute('data-f')===f){i.click();}});});});"
+              # Åpnes siden med en tjeneste i adressen, rulles den valgte kolonnen fram hvis den ikke er synlig.
+              "function reveal(){var c=document.querySelector('.card.sel');if(!c){return;}var r=c.getBoundingClientRect();"
+              "if(r.top<0||r.bottom>innerHeight){c.scrollIntoView({block:'start'});}}"
+              "window.addEventListener('hashchange',reveal);window.addEventListener('load',reveal);"
+              "</script>")
     return page.replace("</body>", script + "</body>", 1)
 
 
@@ -715,11 +770,15 @@ def cmd_build(pdf=True):
             info += f" · gjelder fra {effective}"
         title = meta.get("title", path.stem)
         bodies[path.name], infos[path.name] = body, (title, effective, info)
-        packages = [s for s in PACKAGES if path.name in PACKAGES[s]] if pdf else []
+        services = [s for s in PACKAGES if path.name in PACKAGES[s]]
         downloads = ""
-        if packages:
-            links = " · ".join(f'<a href="{package_path(s)}">{SERVICE_NAMES[s]}</a>' for s in packages)
-            downloads = f'<p class="downloads">Last ned alle avtalevilkår for tjenesten som PDF: {links}</p>'
+        if services:
+            applies = " · ".join(f'<a href="index.html#{s}">{SERVICE_NAMES[s]}</a>' for s in services)
+            downloads = f'<p>Gjelder for: {applies}</p>'
+            if pdf:
+                links = " · ".join(f'<a href="{package_path(s)}">{SERVICE_NAMES[s]}</a>' for s in services)
+                downloads += f'<p>Last ned alle avtalevilkår for tjenesten som PDF: {links}</p>'
+            downloads = f'<div class="scope">{downloads}</div>'
         (SITE / page_name(path.name)).write_text(
             PAGE.format(
                 title=html.escape(title), meta=info, body=body, downloads=downloads,
@@ -727,7 +786,8 @@ def cmd_build(pdf=True):
             ),
             encoding="utf-8",
         )
-    (SITE / "index.html").write_text(diagram_with_links(names, pdf), encoding="utf-8")
+    titles = {n: infos[n][0] for n in infos}
+    (SITE / "index.html").write_text(diagram_with_links(names, pdf, titles), encoding="utf-8")
     print(f"Bygget {len(docs)} dokumenter og forsiden i {SITE.relative_to(ROOT)}/")
     if pdf:
         missing = sorted({n for s in PACKAGES for n in PACKAGES[s]} - set(bodies))
