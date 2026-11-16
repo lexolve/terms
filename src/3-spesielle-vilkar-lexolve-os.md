@@ -8,6 +8,8 @@ effective_from: 2026-11-11
 
 # Spesielle vilkår for Lexolve OS
 
+Disse vilkårene gjelder for Lexolve OS, i tillegg til [Generelle vilkår for virksomheter](2-generelle-vilkar-virksomheter.md) og [Overordnede vilkår for Låvlis tjenester](1-overordnede-vilkar.md).
+
 ## 1 Tjenesten {#service}
 
 Lexolve OS er en tjeneste for maler, dokumenter og kontrakter for [virksomheter]{.term key=virksomhet}, med blant annet saksagent, dokumentgenerator, kontraktshåndtering og digital signering.

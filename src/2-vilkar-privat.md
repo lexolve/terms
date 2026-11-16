@@ -8,6 +8,8 @@ effective_from: 2026-11-11
 
 # Vilkår for Låvli Privat
 
+Disse vilkårene gjelder for Låvli Privat, i tillegg til [Overordnede vilkår for Låvlis tjenester](1-overordnede-vilkar.md).
+
 ## 1 Hvem tjenesten er for {#eligibility}
 
 Låvli Privat er en KI-tjeneste for privatpersoner over 18 år som har spørsmål om private forhold.

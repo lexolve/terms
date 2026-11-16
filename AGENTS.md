@@ -55,6 +55,10 @@ Derfor skal disse dokumentene kunne stå alene:
 ### Rangordning
 
 Dokumentene har ingen rangordning. Alminnelige tolkningsregler gjelder.
+
+Det kundene typisk avtaler, står i kundeavtalens egne punkter, ikke som avvik: oppsett under «Leveranse», pris, forbruk og betaling under «Bestilling», varighet under «Avtaleperiode», og andre forhold ved leveransen under «Andre forhold ved leveransen».
+Standardvilkårene skal åpne for dette der det trengs, for eksempel med «etter kundeavtalen» eller «med mindre kundeavtalen sier noe annet».
+Avvik er bare for reelle endringer i vilkårene, for eksempel ansvar, tjenestenivå, eksportfrist eller forskning.
 Et avvik i en kundeavtale viser til punktet i standarddokumentet det erstatter eller utfyller, og begynner med «I stedet for [punkt om …](…) gjelder: …» eller «I tillegg til [punkt om …](…) gjelder: …». Avvik uten et punkt å vise til begynner med «I tillegg gjelder: …».
 Skriv ikke inn rangordning noe sted.
 
@@ -155,6 +159,7 @@ Ordlisten står som generert tabell i `1-overordnede-vilkar.md`, se avsnittet om
 ## Faste maler
 
 Kundeavtalen har disse punktene: Parter og kontaktpersoner, Leveranse, Bestilling, Avtaleperiode, Avtaledokumenter, Avvik fra standardvilkårene, Signaturer.
+For en enkelt kunde kan ordlyden i Leveranse, Bestilling og Avtaleperiode tilpasses, og det kan legges til punkter: «Andre forhold ved leveransen» rett etter Leveranse, og egne punkter med beskrivende overskrift før Avtaledokumenter for forhold som ikke gjelder leveransen. Et slikt punkt skal ikke endre en regel i standardvilkårene. Det er et avvik. Avtaledokumenter, formatet for avvik og signaturene ligger fast.
 Felt som fylles ut for hver kunde, følger malformatet i legal-knowledge (`docs/PIPELINE.md`, avsnittet «Tenant templates»):
 
 - Feltene deklareres under `fields` i metadata, med `name`, `label`, `question`, `type`, `required` og eventuelt `default`. Eksempelverdier står som `default`.
@@ -211,6 +216,8 @@ Felt som er ulike mellom tjenestene, kan ha én verdi per tjeneste, med tjeneste
 - Unntak: garantiene i punktet om forskning står både i `4-personvern-privat.md` og `4-personvern-bedrift.md`. Endres det ene, skal det andre endres likt.
 - Unntak: KI-forbeholdet står både i `1-overordnede-vilkar.md#ai` og i `2-vilkar-privat.md#eligibility`. Endres det ene, skal det andre endres likt.
 - Unntak: at innholdet i Låvli Plattform ikke brukes til forskning med mindre kundeavtalen sier noe annet, står både i `3-spesielle-vilkar-plattform.md#privacy` og i `4-personvern-plattform.md#own-processing`, av pedagogiske hensyn. Endres det ene, skal det andre endres likt.
+
+- Unntak: kundeavtalen gjentar hovedregelen i `3-spesielle-vilkar-plattform.md#termination` om at avtalen gjelder for 12 måneder om gangen og fornyes automatisk, så kunden ser varigheten i avtalen. Endres det ene, skal det andre endres likt.
 
 Overfor forbrukere i Låvli Privat kan informasjon som er viktig for å forstå tjenesten, gjentas i vilkårene for Privat, selv om regelen står i de overordnede vilkårene. Hensynet er pedagogisk: forbrukeren skal møte de viktigste forbeholdene der de leser. Gjentakelsen skal være kort, og regelen gjelder fortsatt der den står i de overordnede vilkårene.
 
