@@ -4,7 +4,8 @@
   python scripts/gendoc.py update   Skriver tabeller fra data/, punktnumre og numre i henvisninger inn i dokumentene.
   python scripts/gendoc.py check    Kontrollerer dokumentene. Avslutter med feil hvis noe er galt.
   python scripts/gendoc.py build    Lager HTML i site/: diagrammet som forside og ett HTML-dokument per dokument,
-                                    og en PDF med alle dokumentene for hver tjeneste. Krever pandoc og WeasyPrint.
+                                    en markdown-versjon av hvert dokument, llms.txt og en PDF med alle
+                                    dokumentene for hver tjeneste. Krever pandoc og WeasyPrint.
   python scripts/gendoc.py build --uten-pdf   Som build, men uten PDF-ene.
 
 Reglene står i AGENTS.md.
@@ -427,6 +428,7 @@ PAGE = """<!doctype html>
 <title>{title} | Låvli</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
+<link rel="alternate" type="text/markdown" href="{markdown}">
 <style>
 :root{{--bg:#FAF9F7;--ink:#212121;--muted:#6F6F6F;--line:#E4E1DB;--card:#FFFFFF;--soft:#FDF5F2;--head:#015040;--link:#015040;--accent:#B8401F;color-scheme:light}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#0E1513;--ink:#ECEFED;--muted:#A5ADA9;--line:#2A3430;--card:#18201D;--soft:#1F2925;--head:#BFE6D8;--link:#8FD3BC;--accent:#F08A66;color-scheme:dark}}}}
@@ -502,6 +504,57 @@ def page_markdown(text, terms):
     body = TERM.sub(term, body)
     body = FIELD.sub(lambda m: f'<span class="field">{html.escape(m.group(0))}</span>', body)
     return body
+
+
+def markdown_name(name):
+    """Navnet på markdown-versjonen: som HTML-siden, men med .md."""
+    return Path(page_name(name)).with_suffix(".md").name
+
+
+def published_markdown(text, meta, name, commit):
+    """Markdown for maskiner som leser vilkårene.
+
+    Front matter har bare det som er nyttig utenfor repoet. Merkingen av begreper og merkelappene rundt
+    tabellene fra data/ fjernes, og lenker til andre dokumenter peker på markdown-versjonene.
+    Ankrene i overskriftene står, fordi henvisningene peker på dem.
+    """
+    body = FRONT_MATTER.sub("", text)
+    body = TERM.sub(lambda m: m.group(1), body)
+    body = COMMENT.sub("", body)
+    body = re.sub(r"\]\(([0-4]-[a-z0-9-]+\.md)", lambda m: "](" + SITE_URL + markdown_name(m.group(1)), body)
+    body = re.sub(r"\n{3,}", "\n\n", body).strip() + "\n"
+    front = {"title": meta.get("title", Path(name).stem), "language": "nb"}
+    if meta.get("effective_from"):
+        front["effective_from"] = meta["effective_from"]
+    if commit:
+        front["version"] = commit[0]
+    front["url"] = SITE_URL + page_name(name)
+    front["services"] = [s for s in PACKAGES if name in PACKAGES[s]]
+    header = yaml.safe_dump(front, allow_unicode=True, sort_keys=False, default_flow_style=None)
+    return f"---\n{header}---\n\n{body}"
+
+
+def llms_txt(infos):
+    """Oversikt for maskiner etter konvensjonen llms.txt, med markdown-versjonen av dokumentene for hver tjeneste."""
+    lines = [
+        "# Låvlis vilkår og personverninformasjon",
+        "",
+        "> Vilkårene, databehandleravtalen, sikkerhetsbeskrivelsen og personverninformasjonen for "
+        "Låvli Privat, Låvli Bedrift, Lexolve OS og Låvli Plattform, fra Låvli AS.",
+        "",
+        "Hvert dokument finnes som HTML og som markdown.",
+        "Front matter i markdown-versjonen oppgir blant annet datoen dokumentet gjelder fra, og versjonen.",
+        "Listene viser hvilke dokumenter som gjelder for hver tjeneste.",
+    ]
+    for service, names in PACKAGES.items():
+        lines += ["", f"## {SERVICE_NAMES[service]}", ""]
+        for name in names:
+            title, effective, _ = infos[name]
+            entry = f"- [{title}]({SITE_URL}{markdown_name(name)})"
+            if effective:
+                entry += f": gjelder fra {html.unescape(effective)}"
+            lines.append(entry)
+    return "\n".join(lines) + "\n"
 
 
 def diagram_with_links(names, pdf=True, titles=None):
@@ -782,12 +835,16 @@ def cmd_build(pdf=True):
         (SITE / page_name(path.name)).write_text(
             PAGE.format(
                 title=html.escape(title), meta=info, body=body, downloads=downloads,
-                history=f"{REPO}/commits/main/src/{path.name}",
+                history=f"{REPO}/commits/main/src/{path.name}", markdown=markdown_name(path.name),
             ),
             encoding="utf-8",
         )
+        (SITE / markdown_name(path.name)).write_text(
+            published_markdown(text, meta, path.name, commit), encoding="utf-8",
+        )
     titles = {n: infos[n][0] for n in infos}
     (SITE / "index.html").write_text(diagram_with_links(names, pdf, titles), encoding="utf-8")
+    (SITE / "llms.txt").write_text(llms_txt(infos), encoding="utf-8")
     print(f"Bygget {len(docs)} dokumenter og forsiden i {SITE.relative_to(ROOT)}/")
     if pdf:
         missing = sorted({n for s in PACKAGES for n in PACKAGES[s]} - set(bodies))
