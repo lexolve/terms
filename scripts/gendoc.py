@@ -549,6 +549,9 @@ def llms_txt(infos):
     for service, names in PACKAGES.items():
         lines += ["", f"## {SERVICE_NAMES[service]}", ""]
         for name in names:
+            # Dokumenter som mangler, meldes av kontrollen for PDF-pakkene i cmd_build.
+            if name not in infos:
+                continue
             title, effective, _ = infos[name]
             entry = f"- [{title}]({SITE_URL}{markdown_name(name)})"
             if effective:

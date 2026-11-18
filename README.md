@@ -20,6 +20,7 @@ Hvilke dokumenter som er med, står i `PACKAGES` i `scripts/gendoc.py`.
 WeasyPrint trenger Pango. Se installasjonsveiledningen til WeasyPrint.
 Hvert dokument publiseres også som markdown, for maskiner som leser vilkårene, for eksempel <https://vilkar.lavli.no/generelle-vilkar-virksomheter.md>.
 Front matter i markdown-versjonen har tittel, språk, datoen dokumentet gjelder fra, versjonen, adressen til HTML-versjonen og tjenestene dokumentet gjelder for.
+Versjonen er siste commit som endret dokumentet. Den mangler hvis dokumentet bygges uten git-historikk eller ikke er committet.
 Merkingen av begreper og merkelappene rundt tabellene er fjernet, og lenkene peker på markdown-versjonene.
 <https://vilkar.lavli.no/llms.txt> viser dokumentene for hver tjeneste, med lenker til markdown-versjonene.
 Skriftene IBM Plex ligger i `assets/fonts/`, så verken nettstedet eller PDF-ene henter noe fra Google Fonts.
