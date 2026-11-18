@@ -11,13 +11,18 @@ Struktur, skriveregler og arbeidsregler står i [AGENTS.md](AGENTS.md).
 pip install -r requirements.txt
 python scripts/gendoc.py update   # skriver tabeller fra data/, punktnumre og numre i henvisninger inn i dokumentene
 python scripts/gendoc.py check    # kontrollerer dokumentene
-python scripts/gendoc.py build    # lager HTML i site/, med diagrammet som forside, og en PDF per tjeneste (krever pandoc og WeasyPrint)
+python scripts/gendoc.py build    # lager HTML og markdown i site/, med diagrammet som forside, og en PDF per tjeneste (krever pandoc og WeasyPrint)
 python scripts/gendoc.py build --uten-pdf   # som build, men uten PDF-ene
 ```
 
 PDF-ene ligger i `site/pdf/` og inneholder alle dokumentene som gjelder én tjeneste, med forside og innholdsfortegnelse.
 Hvilke dokumenter som er med, står i `PACKAGES` i `scripts/gendoc.py`.
 WeasyPrint trenger Pango. Se installasjonsveiledningen til WeasyPrint.
+Hvert dokument publiseres også som markdown, for maskiner som leser vilkårene, for eksempel <https://vilkar.lavli.no/generelle-vilkar-virksomheter.md>.
+Front matter i markdown-versjonen har tittel, språk, datoen dokumentet gjelder fra, versjonen, adressen til HTML-versjonen og tjenestene dokumentet gjelder for.
+Versjonen er siste commit som endret dokumentet. Den mangler hvis dokumentet bygges uten git-historikk eller ikke er committet.
+Merkingen av begreper og merkelappene rundt tabellene er fjernet, og lenkene peker på markdown-versjonene.
+<https://vilkar.lavli.no/llms.txt> viser dokumentene for hver tjeneste, med lenker til markdown-versjonene.
 Skriftene IBM Plex ligger i `assets/fonts/`, så verken nettstedet eller PDF-ene henter noe fra Google Fonts.
 
 Kontrollen kjøres også ved hver pull request og push til `main`.

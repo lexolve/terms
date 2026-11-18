@@ -47,16 +47,14 @@ fields:
     required: false
   - name: kreditterPerManed
     label: KI-kreditter per måned
-    question: Hvor mange KI-kreditter har virksomheten per måned?
+    question: Hvor mange KI-kreditter er inkludert per måned?
     type: number
-    required: false
-    default: "1 000"
+    required: true
   - name: manedspris
     label: Pris per måned
     question: Hvor mange kroner koster Låvli Plattform per måned?
     type: amount
-    required: false
-    default: "30 000"
+    required: true
   - name: overforbrukPris
     label: Pris per KI-kreditt ved overforbruk
     question: Hvor mange kroner koster en KI-kreditt ut over den månedlige rammen?
@@ -112,6 +110,14 @@ fields:
     question: Hvem signerer for virksomheten? Oppgi navn og stilling.
     type: text
     required: true
+  - name: signering
+    label: Signering
+    question: Skal avtalen signeres digitalt eller på papir?
+    type: choice
+    required: true
+    options:
+      - { value: digitalt, label: Digitalt }
+      - { value: papir, label: På papir }
 ---
 
 # Kundeavtale
@@ -183,8 +189,30 @@ Det er ingen avvik fra standardvilkårene.
 
 ## 7 Signaturer {#signatures}
 
+{{#if (eq signering "papir")}}
+[STED:sted for signering], [DATO:dato for signering]
+
+For Låvli AS:
+
+[SIGNATUR:signatur fra underskriver for Låvli]
+
+{{lavliSignatar}}
+
+[STED:sted for signering], [DATO:dato for signering]
+
+For {{kundeNavn}}:
+
+[SIGNATUR:signatur fra underskriver for virksomheten]
+
+{{kundeSignatar}}
+{{else}}
 Avtalen signeres digitalt.
 
-For Låvli AS: {{lavliSignatar}}
+For Låvli AS:
 
-For {{kundeNavn}}: {{kundeSignatar}}
+{{lavliSignatar}}
+
+For {{kundeNavn}}:
+
+{{kundeSignatar}}
+{{/if}}
