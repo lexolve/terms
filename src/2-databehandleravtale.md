@@ -118,7 +118,7 @@ Virksomheten melder bruddet til Datatilsynet og de registrerte når det kreves, 
 Låvli skal gi [virksomheten]{.term key=virksomhet} informasjonen som trengs for å vise at avtalen følges, også oppdatert teknisk dokumentasjon.
 
 Virksomheten, eller en revisor virksomheten velger, kan gjennomføre revisjon, også inspeksjon, høyst én gang i året og med minst 30 dagers varsel.
-Begrensningene gjelder ikke etter et brudd på personopplysningssikkerheten eller ved pålegg fra Datatilsynet.
+Begrensningene gjelder ikke etter et brudd på personopplysningssikkerheten, ved pålegg fra Datatilsynet eller ved begrunnet mistanke om at avtalen ikke følges.
 Før en revisjon kan Låvli tilby oppdatert dokumentasjon eller uavhengige rapporter.
 
 ## 12 Endringer {#changes}

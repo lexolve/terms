@@ -30,7 +30,7 @@
     privat: 270 dager
     bedrift: 270 dager
     lexolve-os: Så lenge kontoen består
-    plattform: Stilles inn av virksomheten
+    plattform: Stilles inn av virksomheten. Samtaler som er eskalert til virksomhetens rådgivere, lagres til virksomheten ber om sletting, og senest til innholdet slettes ved opphør
   deletion:
     privat: Automatisk i trinn, med arkivering, gjenopprettingsperiode og permanent sletting. Ved opphør innen 30 dager, og i sikkerhetskopier innen ytterligere 30 dager
     bedrift: Automatisk i trinn, med arkivering, gjenopprettingsperiode og permanent sletting. Ved opphør etter 30 dager, når fristen for å kreve eksport er ute, og i sikkerhetskopier innen ytterligere 30 dager
